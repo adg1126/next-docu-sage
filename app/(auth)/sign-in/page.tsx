@@ -10,7 +10,7 @@ export default async function SignIn() {
   if (loggedInUser?.userId) redirect('/');
 
   return (
-    <MaxWidthWrapper className='w-full h-screen flex flex-col items-center justify-center'>
+    <MaxWidthWrapper className='w-full min-h-screen flex flex-col items-center justify-center'>
       <AuthForm type='sign-in' />
     </MaxWidthWrapper>
   );

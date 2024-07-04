@@ -27,8 +27,8 @@ export const signIn = async ({ email, password }: signInProps) => {
     const user = await getUserInfo({ userId: session.userId });
 
     return parseStringify(user);
-  } catch (err) {
-    console.error('Sign in error: ', err);
+  } catch (err: any) {
+    return { error: err?.response?.message };
   }
 };
 
@@ -69,8 +69,8 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
     });
 
     return parseStringify(newUser);
-  } catch (err) {
-    console.error('Sign up error: ', err);
+  } catch (err: any) {
+    return { error: err?.response?.message };
   }
 };
 
