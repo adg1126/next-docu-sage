@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -14,6 +13,7 @@ import CustomInput from './CustomInput';
 
 import { authFormSchema } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
+import { signIn, signUp } from '@/lib/actions/userActions';
 
 export default function AuthForm({ type }: { type: String }) {
   const router = useRouter();
@@ -43,9 +43,24 @@ export default function AuthForm({ type }: { type: String }) {
     try {
       // Sign up with Appwrite
       if (type === 'sign-up') {
+        const userData = {
+          firstName: data.firstName!,
+          lastName: data.lastName!,
+          email: data.email,
+          password: data.password,
+        };
+        const newUser = await signUp(userData);
+        setUser(newUser);
+        if (newUser) router.push('/');
       }
 
-      if (type == 'sign-in') {
+      if (type === 'sign-in') {
+        const newUser = await signIn({
+          email: data.email,
+          password: data.password,
+        });
+        setUser(newUser);
+        if (newUser) router.push('/');
       }
     } catch (err) {
       console.log('Auth error: ', err);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FormControl,
   FormField,
@@ -11,6 +11,7 @@ import { Control, FieldPath } from 'react-hook-form';
 import { z } from 'zod';
 
 import { authFormSchema } from '@/lib/utils';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
 const formSchema = authFormSchema('sign-up');
 
@@ -29,6 +30,12 @@ export default function CustomInput({
   placeholder,
   type,
 }: CustomInput) {
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const handleChangePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   return (
     <FormField
       control={control}
@@ -38,12 +45,33 @@ export default function CustomInput({
           <FormLabel htmlFor={name}>{label}</FormLabel>
           <div className='flex w-full flex-col'>
             <FormControl>
-              <Input
-                id={name}
-                placeholder={placeholder}
-                type={type}
-                {...field}
-              />
+              <div className='flex flex-row items-center'>
+                {
+                  <Input
+                    id={name}
+                    placeholder={placeholder}
+                    type={
+                      type === 'password' && passwordVisible
+                        ? 'text'
+                        : type === 'password' && !passwordVisible
+                        ? 'password'
+                        : type
+                    }
+                    {...field}
+                  />
+                }
+                {type === 'password' && passwordVisible ? (
+                  <EyeIcon
+                    onClick={handleChangePasswordVisibility}
+                    className='relative right-8 cursor-pointer'
+                  />
+                ) : type === 'password' && !passwordVisible ? (
+                  <EyeOffIcon
+                    onClick={handleChangePasswordVisibility}
+                    className='relative right-8 cursor-pointer'
+                  />
+                ) : null}
+              </div>
             </FormControl>
             <FormMessage className='mt-2' />
           </div>
