@@ -22,7 +22,6 @@ export default function Home() {
           PDFs, ask any question, and receive detailed, accurate responses that
           help you understand your topics better.
         </p>
-
         <Link
           className={buttonVariants({
             size: 'lg',
@@ -36,7 +35,7 @@ export default function Home() {
       </MaxWidthWrapper>
 
       {/* value proposition section */}
-      <div>
+      <section>
         <div className='relative isolate'>
           <div
             aria-hidden='true'
@@ -81,10 +80,10 @@ export default function Home() {
             />
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Feature section */}
-      <div className='mx-auto mb-32 mt-32 max-w-5xl sm:mt-56'>
+      <section className='mx-auto mb-32 mt-32 max-w-5xl sm:mt-56'>
         <div className='mb-12 px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl sm:text-center'>
             <h2 className='mt-2 font-bold text-4xl text-gray-900 sm:text-5xl'>
@@ -155,7 +154,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }
