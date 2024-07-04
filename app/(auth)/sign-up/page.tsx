@@ -7,7 +7,7 @@ import React from 'react';
 export default async function SignUp() {
   const loggedInUser = await getLoggedInUser();
 
-  if (loggedInUser?.userId) redirect('/');
+  if (loggedInUser?.userId) redirect('/dashboard');
 
   return (
     <MaxWidthWrapper className='w-full min-h-screen flex flex-col items-center justify-center'>

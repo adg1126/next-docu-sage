@@ -57,7 +57,7 @@ export default function AuthForm({ type }: { type: String }) {
           setAlertMsg(res.error);
         } else {
           setUser(res);
-          router.push('/');
+          router.push('/dashboard');
         }
       }
 
@@ -71,7 +71,7 @@ export default function AuthForm({ type }: { type: String }) {
           setAlertMsg(res.error);
         } else {
           setUser(res);
-          router.push('/');
+          router.push('/dashboard');
         }
       }
     } catch (err) {
