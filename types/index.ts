@@ -13,3 +13,33 @@ declare type SignUpParams = {
 declare interface getUserInfoProps {
   userId: string;
 }
+
+declare interface getUserFilesProps {
+  userId: string;
+}
+
+declare type UploadStatus = 'PENDING' | 'PROCESSING' | 'SUCCESS' | 'FAILED';
+
+declare type UserFile = {
+  fileId: string;
+  name: string;
+  uploadStatus: UploadStatus;
+  url: string;
+  key: string;
+  createdAt: Date;
+  updatedAt: Date;
+  users: User;
+  userId: string;
+};
+
+declare type User = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  stripeSubscriptionId: string;
+  stripePriceId: string;
+  stripeCurrentPeriodEnd: Date;
+  stripeCustomerId: string;
+  files: UserFile[];
+};

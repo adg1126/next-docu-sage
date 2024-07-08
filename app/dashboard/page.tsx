@@ -1,11 +1,6 @@
-import { getLoggedInUser } from '@/lib/actions/userActions';
-import { redirect } from 'next/navigation';
 import React from 'react';
+import ClientDashboard from '../../components/ClientDashboard';
 
-export default async function Dashboard() {
-  const loggedInUser = await getLoggedInUser();
-
-  if (!loggedInUser?.userId) redirect('/');
-
-  return <div>Dashboard</div>;
+export default function Dashboard() {
+  return <ClientDashboard />;
 }
