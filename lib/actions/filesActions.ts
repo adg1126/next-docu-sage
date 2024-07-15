@@ -44,6 +44,32 @@ export const uploadFile = async (file: any) => {
   }
 };
 
+export const deleteFile = async ({
+  fileCollectionId,
+  fileBucketId,
+}: {
+  fileCollectionId: string;
+  fileBucketId: string;
+}) => {
+  console.log(fileCollectionId, fileBucketId);
+  try {
+    // delete file in File colleection
+    await databases.deleteDocument(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+      process.env.NEXT_PUBLIC_APPWRITE_FILE_COLLECTION_ID!,
+      fileCollectionId
+    );
+
+    // delete file in file bucket
+    await storage.deleteFile(
+      process.env.NEXT_PUBLIC_APPWRITE_FILE_BUCKET_ID!,
+      fileBucketId
+    );
+  } catch (err) {
+    console.log('deleteFile: ', err);
+  }
+};
+
 export const getUserFiles = async (userId: string) => {
   try {
     const documentRes = await databases.listDocuments(
