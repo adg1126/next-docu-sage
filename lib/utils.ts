@@ -36,3 +36,8 @@ export const authFormSchema = (type: String) =>
         confirmPassword:
           type == 'sign-in' ? z.string().optional() : z.string().min(8),
       });
+
+export const pdfRendererSchema = (maxPage: number) =>
+  z.object({
+    page: z.string().refine((num) => Number(num) > 0 && Number(num) <= maxPage),
+  });
