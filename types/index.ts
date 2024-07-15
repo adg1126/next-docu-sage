@@ -43,3 +43,18 @@ declare type User = {
   stripeCustomerId: string;
   files: UserFile[];
 };
+
+declare interface FilePageProps {
+  params: {
+    fileId: string;
+  };
+}
+
+declare interface FileUpdateProps {
+  fileId: string;
+  name: string;
+}
+
+declare interface PdfRenderProps {
+  fileUrl: string;
+}

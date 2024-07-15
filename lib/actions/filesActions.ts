@@ -51,7 +51,6 @@ export const deleteFile = async ({
   fileCollectionId: string;
   fileBucketId: string;
 }) => {
-  console.log(fileCollectionId, fileBucketId);
   try {
     // delete file in File colleection
     await databases.deleteDocument(
@@ -79,6 +78,27 @@ export const getUserFiles = async (userId: string) => {
     );
 
     return parseStringify(documentRes);
+  } catch (err: any) {
+    return { error: err?.response?.message };
+  }
+};
+
+export const getFile = async (fileDocId: string) => {
+  try {
+    const fileDocumentRes = await databases.getDocument(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+      process.env.NEXT_PUBLIC_APPWRITE_FILE_COLLECTION_ID!,
+      fileDocId
+    );
+
+    const { fileId: fileBucketId } = fileDocumentRes;
+
+    const fileBucketRes = await storage.getFileView(
+      process.env.NEXT_PUBLIC_APPWRITE_FILE_BUCKET_ID!,
+      fileBucketId
+    );
+
+    return parseStringify(fileBucketRes);
   } catch (err: any) {
     return { error: err?.response?.message };
   }
