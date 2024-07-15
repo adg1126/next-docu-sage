@@ -38,11 +38,11 @@ export default function PdfRenderer({ fileUrl }: PdfRenderProps) {
   const { toast } = useToast(),
     { width, ref } = useResizeDetector();
 
-  const [numPages, setNumPages] = useState(null),
-    [currentPage, setCurrentPage] = useState(1),
-    [scale, setScale] = useState(1),
-    [rotation, setRotation] = useState(0),
-    [renderedScale, setRenderedScale] = useState(null);
+  const [numPages, setNumPages] = useState<number>(),
+    [currentPage, setCurrentPage] = useState<number>(1),
+    [scale, setScale] = useState<number>(1),
+    [rotation, setRotation] = useState<number>(0),
+    [renderedScale, setRenderedScale] = useState<number | null>(null);
 
   const isLoading = renderedScale !== scale;
 

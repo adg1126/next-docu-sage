@@ -13,7 +13,7 @@ export default function PdfFullscreen({ fileUrl }: PdfRenderProps) {
     { width, ref } = useResizeDetector();
 
   const [dialogOpen, setDialogOpen] = useState(false),
-    [numPages, setNumPages] = useState(null);
+    [numPages, setNumPages] = useState<number | null>(null);
 
   return (
     <Dialog
