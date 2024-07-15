@@ -4,17 +4,16 @@ import UploadButton from './UploadButton';
 import { FileX, MessageSquare, Plus, TrashIcon } from 'lucide-react';
 import Link from 'next/link';
 
-// import { getUserFiles } from '@/lib/actions/filesActions';
 import { getLoggedInUser } from '@/lib/actions/userActions';
 import { format } from 'date-fns';
 import { Button } from './ui/button';
+import { getUserFiles } from '@/lib/actions/filesActions';
 
 export default async function ClientDashboard() {
   const loggedInUser = await getLoggedInUser();
-  // const files = await getUserFiles(loggedInUser.userId);
+  const { documents: files } = await getUserFiles(loggedInUser.$id);
 
-  // console.log(userFiles);
-
+  console.log(files);
   return (
     <main className='mx-auto max-w-7xl md:p-10'>
       <div className='mt-8 flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:items-center sm:gap-0'>
@@ -23,53 +22,47 @@ export default async function ClientDashboard() {
       </div>
 
       {/* files */}
-      {/* {files?.length > 0 ? (
+      {files?.length > 0 ? (
         <ul className='mt-8 grid grid-cols-1 gap-6 divide-y divide-zinc-200 mg:grid-cols-2 md:grid-cols-3'>
-          {files
-            ?.sort(
-              (a, b) =>
-                new Date(b.createdAt.getTime()) -
-                new Date(a.createdAt.getTime())
-            )
-            .map((file) => (
-              <li
-                key={file.fileId}
-                className='col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition hover:shadow-lg'
+          {files.map((file: any) => (
+            <li
+              key={file.fileId}
+              className='col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition hover:shadow-lg'
+            >
+              <Link
+                className='flex flex-col gap-2'
+                href={`/dashboard/${file.fileId}`}
               >
-                <Link
-                  className='flex flex-col gap-2'
-                  href={`/dashboard/${file.fileId}`}
-                >
-                  <div className='pt-6 px-6 flex w-full items-center justify-between space-x-6'>
-                    <div className='h-10 w-10 flex-shrink-0 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500' />
-                    <div className='flex-1 truncate'>
-                      <div className='flex items-center space-x-3'>
-                        <h3 className='truncate text-lg font-medium text-zinc-900'>
-                          {file.name}
-                        </h3>
-                      </div>
+                <div className='pt-6 px-6 flex w-full items-center justify-between space-x-6'>
+                  <div className='h-10 w-10 flex-shrink-0 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500' />
+                  <div className='flex-1 truncate'>
+                    <div className='flex items-center space-x-3'>
+                      <h3 className='truncate text-lg font-medium text-zinc-900'>
+                        {file.name}
+                      </h3>
                     </div>
                   </div>
-                </Link>
-
-                <div className='px-6 mt-4 grid grid-cols-3 place-items-center py-2 gap-6 text-xs text-zinc-500'>
-                  <div className='flex items-center gap-2'>
-                    <Plus className='h-4 w-4' />
-                    {format(new Date(file.createdAt), 'MMM yyyy')}
-                  </div>
-                  <div className='flex items-center gap-2'>
-                    <MessageSquare className='h-4 w-4' />
-                  </div>
-                  <Button
-                    size='sm'
-                    className='w-full'
-                    variant='destructive'
-                  >
-                    <TrashIcon className='h-4 w-4' />
-                  </Button>
                 </div>
-              </li>
-            ))}
+              </Link>
+
+              <div className='px-6 mt-4 grid grid-cols-3 place-items-center py-2 gap-6 text-xs text-zinc-500'>
+                <div className='flex items-center gap-2'>
+                  <Plus className='h-4 w-4' />
+                  {format(new Date(file.createdAt), 'MMM yyyy')}
+                </div>
+                <div className='flex items-center gap-2'>
+                  <MessageSquare className='h-4 w-4' />
+                </div>
+                <Button
+                  size='sm'
+                  className='w-full'
+                  variant='destructive'
+                >
+                  <TrashIcon className='h-4 w-4' />
+                </Button>
+              </div>
+            </li>
+          ))}
         </ul>
       ) : (
         <div className='mt-16 flex flex-col items-center gap-2'>
@@ -77,7 +70,7 @@ export default async function ClientDashboard() {
           <h3 className='font-semibold text-xl'>You have no files.</h3>
           <p>{`Upload your first PDF.`}</p>
         </div>
-      )} */}
+      )}
     </main>
   );
 }

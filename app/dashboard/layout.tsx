@@ -9,7 +9,7 @@ export default async function RootLayout({
 }>) {
   const loggedInUser = await getLoggedInUser();
 
-  if (!loggedInUser?.userId) redirect('/');
+  if (!loggedInUser?.$id) redirect('/');
 
   return (
     <main className='min-h-screen font-sans antialiased grainy'>

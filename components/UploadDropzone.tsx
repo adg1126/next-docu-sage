@@ -12,8 +12,6 @@ export default function UploadDropzone() {
 
   const handleFileUpload = async (acceptedFile: any) => {
     const file = acceptedFile[0];
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = new Uint8Array(arrayBuffer);
 
     const res = await uploadFile(file);
     console.log(res);

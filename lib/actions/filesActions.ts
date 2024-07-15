@@ -1,4 +1,4 @@
-import { Client, ID, Storage, Databases } from 'appwrite';
+import { Client, ID, Storage, Databases, Query } from 'appwrite';
 import { parseStringify } from '../utils';
 import { getLoggedInUser } from './userActions';
 
@@ -38,10 +38,22 @@ export const uploadFile = async (file: any) => {
       }
     );
 
-    console.log('uploadFile', createdFileInDatabase);
-
-    // return parseStringify(res);
+    return parseStringify(createdFileInDatabase);
   } catch (err: any) {
     return { error: err?.response?.message };
+  }
+};
+
+export const getUserFiles = async (userId: string) => {
+  try {
+    const documentRes = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+      process.env.NEXT_PUBLIC_APPWRITE_FILE_COLLECTION_ID!,
+      [Query.equal('users', userId)]
+    );
+
+    return parseStringify(documentRes);
+  } catch (err) {
+    console.log('getUserFiles: ', err);
   }
 };

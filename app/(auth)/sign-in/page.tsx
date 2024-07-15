@@ -7,7 +7,7 @@ import React from 'react';
 export default async function SignIn() {
   const loggedInUser = await getLoggedInUser();
 
-  if (loggedInUser?.userId) redirect('/dashboard');
+  if (loggedInUser?.$id) redirect('/dashboard');
 
   return (
     <MaxWidthWrapper className='w-full min-h-screen flex flex-col items-center justify-center'>
