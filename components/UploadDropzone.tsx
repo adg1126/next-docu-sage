@@ -1,6 +1,6 @@
 import { uploadFile } from '@/lib/actions/filesActions';
 import { Progress } from '@/components/ui/progress';
-import { Cloud, CloudIcon, File } from 'lucide-react';
+import { Cloud, File } from 'lucide-react';
 import Dropzone from 'react-dropzone';
 
 import React, { useState } from 'react';

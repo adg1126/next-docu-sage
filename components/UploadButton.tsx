@@ -32,7 +32,7 @@ export default function UploadButton() {
       <DialogContent className='sm:max-w-[425px]'>
         <DialogTitle>Upload PDF</DialogTitle>
         <DialogDescription></DialogDescription>
-        <UploadDropzone />
+        <UploadDropzone handleModalOpen={handleModalOpen} />
       </DialogContent>
     </Dialog>
   );
