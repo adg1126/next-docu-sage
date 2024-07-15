@@ -1,20 +1,39 @@
 import { uploadFile } from '@/lib/actions/filesActions';
-import { Progress } from '@radix-ui/react-progress';
+import { Progress } from '@/components/ui/progress';
 import { Cloud, CloudIcon, File } from 'lucide-react';
 import Dropzone from 'react-dropzone';
 
 import React, { useState } from 'react';
-import { Button } from './ui/button';
 
-export default function UploadDropzone() {
+export default function UploadDropzone({ handleModalOpen }: any) {
   const [isUploading, setIsUploading] = useState(false),
     [uploadProgress, setUploadProgress] = useState(0);
 
   const handleFileUpload = async (acceptedFile: any) => {
+    setIsUploading(true);
+    const progressInterval = startSimulatedProgress();
     const file = acceptedFile[0];
 
-    const res = await uploadFile(file);
-    console.log(res);
+    await uploadFile(file);
+    clearInterval(progressInterval);
+    setUploadProgress(100);
+    handleModalOpen(false);
+  };
+
+  const startSimulatedProgress = () => {
+    setUploadProgress(0);
+
+    const interval = setInterval(() => {
+      setUploadProgress((prevProgress) => {
+        if (prevProgress >= 95) {
+          clearInterval(interval);
+          return prevProgress;
+        }
+        return prevProgress + 5;
+      });
+    }, 500);
+
+    return interval;
   };
 
   return (
@@ -55,7 +74,7 @@ export default function UploadDropzone() {
               {isUploading ? (
                 <div className='w-full mt-4 max-w-xs mx-auto'>
                   <Progress
-                    value={50}
+                    value={uploadProgress}
                     className='h-1 w-full bg-zinc-200'
                   />
                 </div>
