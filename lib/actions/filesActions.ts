@@ -65,8 +65,8 @@ export const deleteFile = async ({
       process.env.NEXT_PUBLIC_APPWRITE_FILE_BUCKET_ID!,
       fileBucketId
     );
-  } catch (err) {
-    console.log('deleteFile: ', err);
+  } catch (err: any) {
+    return { error: err?.response?.message };
   }
 };
 
@@ -79,7 +79,7 @@ export const getUserFiles = async (userId: string) => {
     );
 
     return parseStringify(documentRes);
-  } catch (err) {
-    console.log('getUserFiles: ', err);
+  } catch (err: any) {
+    return { error: err?.response?.message };
   }
 };

@@ -101,8 +101,8 @@ export const getUserInfo = async ({ userId }: getUserInfoProps) => {
     );
 
     return parseStringify(user.documents[0]);
-  } catch (err) {
-    console.log('getUserInfo: ', err);
+  } catch (err: any) {
+    return { error: err?.response?.message };
   }
 };
 
@@ -114,7 +114,7 @@ export async function getLoggedInUser() {
     const user = await getUserInfo({ userId: result.$id });
 
     return parseStringify(user);
-  } catch (err) {
-    console.log('getLoggedInUser: ', err);
+  } catch (err: any) {
+    return { error: err?.response?.message };
   }
 }

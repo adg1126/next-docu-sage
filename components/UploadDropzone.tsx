@@ -4,20 +4,34 @@ import { Cloud, File } from 'lucide-react';
 import Dropzone from 'react-dropzone';
 
 import React, { useState } from 'react';
+import { useToast } from './ui/use-toast';
 
 export default function UploadDropzone({ handleModalOpen }: any) {
   const [isUploading, setIsUploading] = useState(false),
     [uploadProgress, setUploadProgress] = useState(0);
+
+  const { toast } = useToast();
 
   const handleFileUpload = async (acceptedFile: any) => {
     setIsUploading(true);
     const progressInterval = startSimulatedProgress();
     const file = acceptedFile[0];
 
-    await uploadFile(file);
-    clearInterval(progressInterval);
-    setUploadProgress(100);
-    handleModalOpen(false);
+    const res = await uploadFile(file);
+
+    if ('error' in res) {
+      clearInterval(progressInterval);
+
+      return toast({
+        title: 'Something went wrong',
+        description: res.error,
+        variant: 'destructive',
+      });
+    } else {
+      clearInterval(progressInterval);
+      setUploadProgress(100);
+      handleModalOpen(false);
+    }
   };
 
   const startSimulatedProgress = () => {
