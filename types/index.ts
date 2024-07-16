@@ -58,3 +58,7 @@ declare interface FileUpdateProps {
 declare interface PdfRenderProps {
   fileUrl: string;
 }
+
+declare interface ChatInputProps {
+  isDisabled?: boolean;
+}

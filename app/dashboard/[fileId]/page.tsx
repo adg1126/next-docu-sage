@@ -1,4 +1,4 @@
-import ChatWrapper from '@/components/ChatWrapper';
+import ChatWrapper from '@/components/chat/ChatWrapper';
 import PdfRenderer from '@/components/PdfRenderer';
 import { getFile } from '@/lib/actions/filesActions';
 import React from 'react';
