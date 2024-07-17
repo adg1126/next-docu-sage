@@ -1,4 +1,3 @@
-import { uploadFile } from '@/lib/actions/filesActions';
 import { Progress } from '@/components/ui/progress';
 import { Cloud, File } from 'lucide-react';
 import Dropzone from 'react-dropzone';
@@ -6,31 +5,51 @@ import Dropzone from 'react-dropzone';
 import React, { useState } from 'react';
 import { useToast } from './ui/use-toast';
 
+import { useRouter } from 'next/navigation';
+
 export default function UploadDropzone({ handleModalOpen }: any) {
   const [isUploading, setIsUploading] = useState(false),
     [uploadProgress, setUploadProgress] = useState(0);
 
   const { toast } = useToast();
 
+  const router = useRouter();
+
   const handleFileUpload = async (acceptedFile: any) => {
     setIsUploading(true);
     const progressInterval = startSimulatedProgress();
     const file = acceptedFile[0];
 
-    const res = await uploadFile(file);
+    const data = new FormData();
+    data.set('file', file);
 
-    if ('error' in res) {
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      body: data,
+    });
+
+    if (res.ok) {
       clearInterval(progressInterval);
+      setUploadProgress(100);
+      handleModalOpen(false);
 
-      return toast({
-        title: 'Something went wrong',
-        description: res.error,
-        variant: 'destructive',
+      router.refresh();
+      toast({
+        title: 'Success',
+        description: res.statusText,
+        variant: 'success',
       });
     } else {
       clearInterval(progressInterval);
       setUploadProgress(100);
       handleModalOpen(false);
+
+      router.refresh();
+      toast({
+        title: 'Error',
+        description: res.statusText,
+        variant: 'destructive',
+      });
     }
   };
 

@@ -32,7 +32,7 @@ export default async function Navbar() {
                 Pricing
               </Link>
 
-              {loggedInUser ? (
+              {loggedInUser?.$id ? (
                 <>
                   <SignOutBtn />
                   <Avatar className='flex  items-center justify-center bg-primary rounded-full w-[35px] h-[35px] font-bold'>{`${loggedInUser?.firstName[0]}${loggedInUser?.lastName[0]}`}</Avatar>

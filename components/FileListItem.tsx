@@ -4,15 +4,19 @@ import React from 'react';
 
 import { format } from 'date-fns';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button } from './ui/button';
 import { Plus, MessageSquare, TrashIcon } from 'lucide-react';
 import { deleteFile } from '@/lib/actions/filesActions';
 
 export default function FileListItem({ file }: any) {
+  const router = useRouter();
+
   const handleDeleteFile = (file: any) => {
     const { $id: fileCollectionId, fileId: fileBucketId } = file;
     deleteFile({ fileCollectionId, fileBucketId });
+    router.refresh();
   };
 
   return (

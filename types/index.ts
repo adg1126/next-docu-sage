@@ -62,3 +62,10 @@ declare interface PdfRenderProps {
 declare interface ChatInputProps {
   isDisabled?: boolean;
 }
+
+declare type StreamResponse = {
+  addMessage: () => void;
+  message: string;
+  handleInputChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  isLoading: boolean;
+};
